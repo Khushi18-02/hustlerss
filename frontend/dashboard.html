@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DermSight Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<header class="header">
+  <div class="header-content">
+    <div>
+      <h1>DermSight Dashboard</h1>
+      <p>Personalized Pre-Clinical Triage Overview</p>
+    </div>
+    <div class="header-actions">
+      <span id="userWelcome">Welcome, User</span>
+      <button class="btn secondary" onclick="logout()">Logout</button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2>Latest Risk Assessment</h2>
+    <p class="risk moderate">Moderate Risk</p>
+    <p><strong>Possible Causes:</strong> Allergic dermatitis, mild infection</p>
+    <p><strong>AI Recommendation:</strong> Consult a dermatologist if symptoms persist beyond 48 hours.</p>
+  </div>
+
+  <div class="action-buttons">
+    <button class="btn primary" onclick="newAssessment()">New Assessment</button>
+    <button class="btn secondary" onclick="viewHistory()">View Full History</button>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Patient Profile</h2>
+      <p><strong>Age:</strong> <span id="patientAge">22</span></p>
+      <p><strong>Gender:</strong> <span id="patientGender">Female</span></p>
+      <p><strong>Known Conditions:</strong> <span id="patientConditions">Asthma</span></p>
+      <p><strong>Allergies:</strong> <span id="patientAllergies">None reported</span></p>
+    </div>
+
+    <div class="card">
+      <h2>Risk Trend</h2>
+      <p>Last 3 Submissions:</p>
+      <ul id="riskTrend">
+        <li>Jan 10 – Low Risk</li>
+        <li>Jan 28 – Moderate Risk</li>
+        <li>Feb 14 – Moderate Risk</li>
+      </ul>
+      <p><strong>Trend:</strong> <span id="trendStatus">Stable, monitor symptoms</span></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Medical Triage History</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Symptoms</th>
+          <th>Image</th>
+          <th>Risk Level</th>
+          <th>Action Suggested</th>
+        </tr>
+      </thead>
+      <tbody id="historyTable">
+        <tr>
+          <td>14 Feb 2026</td>
+          <td>Rash + itching</td>
+          <td>Uploaded</td>
+          <td class="moderate">Moderate</td>
+          <td>Doctor Visit</td>
+        </tr>
+        <tr>
+          <td>28 Jan 2026</td>
+          <td>Dry patches</td>
+          <td>Uploaded</td>
+          <td class="low">Low</td>
+          <td>Home Care</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn secondary" style="margin-top: 1rem;">Download Full Report (PDF)</button>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>AI Health Assistant</h2>
+      <p>Ask questions based on your previous reports.</p>
+      <button class="btn">Open Chat</button>
+    </div>
+
+    <div class="card">
+      <h2>Consult a Specialist</h2>
+      <p>Get professional guidance for your condition.</p>
+      <button class="btn">Book Consultation</button>
+      <p style="font-size: 13px; color:#777; margin-top: 0.5rem;">(Premium Feature)</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  DermSight does not replace professional medical diagnosis. Always consult licensed clinicians.
+</footer>
+
+<script src="js/dashboard.js"></script>
+</body>
+</html>
