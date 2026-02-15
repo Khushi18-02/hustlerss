@@ -86,6 +86,9 @@ function getCurrentUser() {
     const userStr = localStorage.getItem('currentUser');
     return userStr ? JSON.parse(userStr) : null;
 }
+function openChat() {
+  window.location.href = "chat.html";
+}
 
 function logout() {
     localStorage.removeItem('currentUser');

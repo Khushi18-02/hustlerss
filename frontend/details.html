@@ -4,13 +4,22 @@
   <meta charset="UTF-8" />
   <title>DermSight – New Assessment</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .loading {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 600;
+    }
+  </style>
 </head>
 
 <body>
+
 <header class="header">
   <div class="header-content">
     <div>
@@ -25,12 +34,13 @@
 </header>
 
 <div class="container">
+
   <div class="disclaimer">
     <strong>Disclaimer:</strong> This tool provides preliminary risk assessment only.
-    It does not offer a medical diagnosis. For emergencies, contact healthcare services immediately.
   </div>
 
   <form id="assessmentForm">
+
     <h2>Patient Information</h2>
 
     <div class="form-group">
@@ -50,41 +60,71 @@
 
     <div class="form-group">
       <label>Existing Medical Conditions</label>
-      <input type="text" id="conditions" placeholder="e.g. Diabetes, Asthma" />
+      <input type="text" id="conditions" />
     </div>
 
     <h2 style="margin-top: 2rem;">Current Symptoms</h2>
 
     <div class="form-group">
-      <label>Upload Image (Skin / Visible Symptom)</label>
+      <label>Upload Image</label>
       <input type="file" id="imageUpload" accept="image/*" />
-      <img id="preview" class="image-preview" width="200" style="display: none;" />
+      <img id="preview" width="200" style="display:none;" />
     </div>
 
     <div class="form-group">
-      <label>Symptom Description</label>
-      <textarea id="symptoms" rows="4" required
-        placeholder="Describe symptoms, duration, pain level, fever, etc."></textarea>
+      <label>Symptoms</label>
+      <textarea id="symptoms" required></textarea>
     </div>
 
     <button type="submit" class="btn">Analyze Risk</button>
+
+    <!-- 🔥 Loading -->
+    <div id="loading" class="loading">
+      ⏳ Analyzing...
+    </div>
+
   </form>
 
-  <div id="resultBox" class="result" style="display: none;">
+  <!-- RESULT -->
+  <div id="resultBox" class="result" style="display:none;">
     <h3>Risk Assessment</h3>
     <p id="riskText"></p>
     <p id="adviceText"></p>
-    <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+
+    <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
       <button class="btn" onclick="saveAssessment()">Save Assessment</button>
-      <button class="btn secondary" onclick="goToDashboard()">Back to Dashboard</button>
+      <button class="btn secondary" onclick="goToDashboard()">Go to Dashboard</button>
     </div>
   </div>
+
 </div>
 
 <footer>
-  © 2026 DermSight | Ethical AI-Assisted Triage
+  © 2026 DermSight
 </footer>
 
 <script src="js/details.js"></script>
+
+<script>
+  // 🔥 Display API result only
+  function displayResults(riskLevel, riskClass, advice) {
+    document.getElementById("loading").style.display = "none";
+
+    const resultBox = document.getElementById('resultBox');
+    const riskText = document.getElementById('riskText');
+    const adviceText = document.getElementById('adviceText');
+
+    resultBox.style.display = "block";
+
+    riskText.innerHTML = `<strong>Risk Level:</strong> ${riskLevel}`;
+  
+  }
+
+  // 🔥 Show loading when submitting
+  document.getElementById("assessmentForm").addEventListener("submit", function () {
+    document.getElementById("loading").style.display = "block";
+  });
+</script>
+
 </body>
 </html>

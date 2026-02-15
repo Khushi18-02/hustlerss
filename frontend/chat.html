@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colorful Health Chatbot</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #b2b2df, #20317d);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  #chat-container {
+    width: 100%;
+    max-width: 600px;
+    background: #ffffffee;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  #chatbox {
+    padding: 20px;
+    height: 450px;
+    overflow-y: auto;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .message {
+    padding: 14px 20px;
+    border-radius: 20px;
+    max-width: 85%;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  .user {
+    background: #4bcffa;
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+  }
+  .bot {
+    background: linear-gradient(135deg, #7892db, #0d32ab);
+    color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+    white-space: pre-line;
+  }
+  #inputArea {
+    display: flex;
+    border-top: 1px solid #ddd;
+    background: #f0f0f0;
+    padding: 10px;
+    gap: 10px;
+  }
+  #inputBox {
+    flex-grow: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    font-size: 15px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  #sendBtn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  #sendBtn:hover {
+    transform: scale(1.05);
+  }
+  @keyframes fadeIn {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1; transform: translateY(0);}
+  }
+</style>
+</head>
+<body>
+
+<div id="chat-container">
+  <div id="chatbox">
+    <div class="message bot">
+      👋 <strong>Hello!</strong> I can give you <span style="color:#ffe066;">health precautions</span> and <span style="color:#ffe066;">skin treatment suggestions</span>.<br><br>
+      Please tell me your previous health history or symptoms. You can type any of the following: <br>
+      <span style="color:#ffd6a5;">"diabetes", "acne", "eczema", "allergy", "dry skin", "thyroid", "hypertension", "pcos", "obesity", or "heart disease"</span>.<br><br>
+      I will give you the <strong>precaution</strong> and <strong>treatment</strong> suggestions based on what you type. 🌿
+    </div>
+  </div>
+
+  <div id="inputArea">
+    <input type="text" id="inputBox" placeholder="Type your health history or symptoms...">
+    <button id="sendBtn">Send</button>
+  </div>
+</div>
+
+<script>
+const chatbox = document.getElementById('chatbox');
+const inputBox = document.getElementById('inputBox');
+
+const historyPrecautions = {
+    "acne": {
+        precaution: "Avoid oily foods, do not touch your face frequently, wash face twice a day.",
+        treatment: "Use mild cleanser, apply salicylic acid cream, consult a dermatologist if severe."
+    },
+    "eczema": {
+        precaution: "Avoid harsh soaps, keep skin moisturized, avoid scratching.",
+        treatment: "Use medicated creams, apply moisturizer regularly, avoid triggers like dust and detergents."
+    },
+    "allergy": {
+        precaution: "Identify and avoid allergens, keep antihistamines handy, avoid scratching.",
+        treatment: "Apply soothing creams, take antihistamines as needed, consult doctor for severe reactions."
+    },
+    "dry skin": {
+        precaution: "Avoid hot showers, drink plenty of water, use gentle moisturizers.",
+        treatment: "Apply rich moisturizer, use mild cleansers, consider humidifier in dry rooms."
+    },
+    "diabetes": {
+        precaution: "Monitor blood sugar regularly, maintain balanced diet, stay active.",
+        treatment: "Maintain proper foot and skin care, avoid sugary skincare products, consult doctor for medication management."
+    },
+    "thyroid": {
+        precaution: "Take prescribed thyroid medication regularly, monitor symptoms, maintain healthy diet.",
+        treatment: "Check for skin dryness or hair loss; use gentle skincare products and moisturizer daily."
+    },
+    "hypertension": {
+        precaution: "Avoid excess salt, monitor blood pressure regularly, exercise moderately.",
+        treatment: "Stay hydrated, maintain healthy skin through gentle cleansers, consult doctor for medication."
+    },
+    "pcos": {
+        precaution: "Maintain healthy weight, balanced diet, regular exercise.",
+        treatment: "Skin care for acne or oily skin, consult gynecologist for hormonal management."
+    },
+    "obesity": {
+        precaution: "Follow healthy diet, increase physical activity, regular checkups.",
+        treatment: "Ensure proper skin hygiene in folds, moisturize to prevent rashes, consult nutritionist."
+    },
+    "heart disease": {
+        precaution: "Avoid fatty foods, exercise regularly, follow doctor’s advice on medications.",
+        treatment: "Maintain skin hydration, avoid smoking and excessive sun exposure."
+    }
+};
+
+function getBotResponse(userInput) {
+    let input = userInput.toLowerCase();
+    let responses = [];
+
+    for (let key in historyPrecautions) {
+        if (input.includes(key)) {
+            responses.push(`⚠️ Precautions for ${key}: ${historyPrecautions[key].precaution}\n💡 Suggested treatment: ${historyPrecautions[key].treatment}`);
+        }
+    }
+
+    if (responses.length > 0) {
+        return responses.join("\n\n");
+    }
+
+    return "Please provide your previous health history or symptoms for specific precautions. Meanwhile, general advice: 🌿 Maintain clean skin, drink water, eat balanced diet, and get regular checkups.";
+}
+
+document.getElementById('sendBtn').addEventListener('click', () => {
+    const userText = inputBox.value.trim();
+    if (userText === "") return;
+
+    const userMsg = document.createElement('div');
+    userMsg.className = 'message user';
+    userMsg.textContent = userText;
+    chatbox.appendChild(userMsg);
+
+    const botMsg = document.createElement('div');
+    botMsg.className = 'message bot';
+    botMsg.textContent = getBotResponse(userText);
+    chatbox.appendChild(botMsg);
+
+    inputBox.value = "";
+    chatbox.scrollTop = chatbox.scrollHeight;
+});
+</script>
+
+</body>
+</html>
